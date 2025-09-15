@@ -17,9 +17,19 @@ namespace Api_Proyecto_actividad_2.Controllers
         }
         // GET: api/<SellerController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("GetAll")]
+        public IActionResult GetAll()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var lista = _SellerServices.GetAll();
+
+                return Ok(lista);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
         }
 
         // GET api/<SellerController>/5
@@ -39,24 +49,6 @@ namespace Api_Proyecto_actividad_2.Controllers
 
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
-        }
-
-        // POST api/<SellerController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<SellerController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<SellerController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }
