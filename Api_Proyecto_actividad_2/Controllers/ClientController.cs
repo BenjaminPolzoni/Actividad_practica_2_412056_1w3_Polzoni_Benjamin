@@ -1,5 +1,6 @@
 ﻿using Actividad_practica_1_412056_1w3_Polzoni_Benjamin.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.SqlTypes;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,9 +18,20 @@ namespace Api_Proyecto_actividad_2.Controllers
         }
         // GET: api/<ClientController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        [Route("GetAll")]
+        public IActionResult GetAll()
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var list = _services.GetAll();
+                
+                return Ok(list);
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError,ex.Message);
+            }
         }
 
         // GET api/<ClientController>/5
